@@ -1,5 +1,6 @@
-import "./Home.css";
+import "./navbar.css";
 import React from "react";
+import { Link } from "react-router-dom";
 
 function template() {
   return (
@@ -7,10 +8,8 @@ function template() {
       <header>
         <nav>
             <ul>
-                <li><a href="about.html">About</a></li>
-                <li><a href="music.html">Music</a></li>
-                <li><a href="photo.html">Photo</a></li>
-                <li><a href="video.html">Video</a></li>
+                <li><Link to="/">About</Link></li>
+                <li><Link to="/music">Music</Link></li>
             </ul>
         </nav>
       </header>
