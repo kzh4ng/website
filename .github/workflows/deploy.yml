@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main, master ]
-  workflow_dispatch:
+  workflow_dispatch:  # Allow manual triggering from GitHub UI
 
 permissions:
   contents: write
@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for better git operations
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -26,16 +28,39 @@ jobs:
       - name: Install dependencies
         run: |
           cd client
-          npm ci
+          npm ci --prefer-offline --no-audit
 
-      - name: Build
+      - name: Build React app
         run: |
           cd client
           npm run build
+        env:
+          CI: true
+          NODE_ENV: production
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "client/build" ]; then
+            echo "Error: Build directory not found!"
+            exit 1
+          fi
+          echo "Build successful! Files:"
+          ls -la client/build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
+        if: success()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./client/build
           cname: kevin-zhang.com
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy: ${{ github.event.head_commit.message }}'
+
+      - name: Deployment summary
+        if: success()
+        run: |
+          echo "✅ Deployment successful!"
+          echo "🌐 Your site will be available at: https://kevin-zhang.com"
+          echo "📦 Deployed commit: ${{ github.sha }}"
