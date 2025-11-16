@@ -1,14 +1,17 @@
 import React, { useRef, useEffect } from 'react';
 import { Routes ,Route } from 'react-router-dom';
-import Home from './Home/Home.js';
+import NavBar from './NavBar/navbar.js';
 import About from './About/About.js';
+import Music from './Music/Music.js';
+import Video from './Video/Video.js';
+import Photo from './Photo/Photo.js';
 
 
 function App() {
 
   return (
     <div className="App">
-      <Home />
+      <NavBar />
       <Routes>
         <Route path="/" element={<About />} />
         <Route path="/music.html" element={<Music />} />

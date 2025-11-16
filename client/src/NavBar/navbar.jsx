@@ -1,4 +1,4 @@
-import "./Home.css";
+import "./navbar.css";
 import React from "react";
 
 function template() {
