@@ -1,8 +1,10 @@
-import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-import About from './About';
-import Music from './Music';
-import NavBar from './NavBar/navbar';
+import React, { useRef, useEffect } from 'react';
+import { Routes ,Route } from 'react-router-dom';
+import NavBar from './NavBar/navbar.js';
+import About from './About/About.js';
+import Music from './Music/Music.js';
+import Video from './Video/Video.js';
+import Photo from './Photo/Photo.js';
 
 function App() {
   return (
